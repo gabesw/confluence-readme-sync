@@ -5,6 +5,7 @@ from utils import extract_domain_and_page_id
 from api import ConfluenceClient, GetPageCommand, GetPageCommandInput, EditPageCommand, EditPageCommandInput
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
+import markdown
 
 load_dotenv()
 
@@ -36,12 +37,19 @@ def main():
     page_body: str = json_response_body["body"]["storage"]["value"]
     page_version_number: int = json_response_body["version"]["number"]
     if not (page_status and page_title and page_body and page_version_number): raise ValueError("Values were not correctly received from get page")
+    
+    # convert markdown file to html
+    converted_html: str
+
+    with open(vars["filepath"], 'r') as f:
+        text = f.read()
+        converted_html = markdown.markdown(text)
+
+    # insert markdown after the insert_after_string
     insert_after_string: str = vars["insert_after"]
     index = page_body.find(insert_after_string)
     if index == -1: raise LookupError("Insert after string was not found in the body of the Confluence page")
-    markdown_to_insert: str = "some markdown here" #PLACEHOLDER - READ README AND CONVERT TO HTML FOR THIS
-    # insert markdown after the insert_after_string
-    page_body = page_body[:index + len(insert_after_string)] + markdown_to_insert + page_body[index + len(insert_after_string):]
+    page_body = page_body[:index + len(insert_after_string)] + converted_html + page_body[index + len(insert_after_string):]
 
     # create edit page command
     input = EditPageCommandInput(domain, page_id, page_status, page_title, page_body, page_version_number)
