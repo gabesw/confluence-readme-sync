@@ -1,0 +1,19 @@
+name: 'confluence-readme-sync'
+description: 'Copies the contents of a markdown file to a Confluence page'
+inputs:
+  filepath:
+    description: 'File path of the markdown file to sync, relative to the root of the repository - README.md by default'
+    required: true
+    default: '${{ github.workspace }}/README.md'
+  url:
+    description: 'Full URL of the Confluence page to sync with'
+    required: true
+  username:
+    description: 'Jira username of the token user'
+    required: true
+  token:
+    description: 'Confluence token for the user'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
