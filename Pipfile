@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 markdown = "*"
+requests = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

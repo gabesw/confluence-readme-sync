@@ -6,10 +6,10 @@ inputs:
     required: true
     default: '${{ github.workspace }}/README.md'
   url:
-    description: 'Full URL of the Confluence page to sync with'
+    description: 'Full URL of the Confluence page to sync with, including the https://'
     required: true
   username:
-    description: 'Jira username of the token user'
+    description: 'Confluence username of the token user'
     required: true
   token:
     description: 'Confluence token for the user'
