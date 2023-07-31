@@ -1,3 +1,7 @@
+# Debug files / tests
+*.debug.*?
+.debug/
+
 # VS Code config
 .vscode/
 
