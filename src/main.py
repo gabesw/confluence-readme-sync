@@ -1,18 +1,20 @@
 import json
 from os import environ
+import re
 from typing import Dict
 from utils import extract_domain_and_page_id
 from api import ConfluenceClient, GetPageCommand, GetPageCommandInput, EditPageCommand, EditPageCommandInput
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import markdown
+from confluence_markdown_extension import ConfluenceExtension
 
 load_dotenv()
 
 def main():
     # retrieve and verify env variables
     vars: Dict[str, str] = {}
-    for key in ["filepath", "url", "username", "token", "insert_after"]:
+    for key in ["filepath", "url", "username", "token", "insert_start_text", "insert_end_text"]:
         value = environ.get(f"INPUT_{key.upper()}")
         if not value:
             raise ValueError(f"Error: Missing value for {key}")
@@ -38,24 +40,28 @@ def main():
     page_version_number: int = json_response_body["version"]["number"]
     if not (page_status and page_title and page_body and page_version_number): raise ValueError("Values were not correctly received from get page")
     
-    # convert markdown file to html
-    converted_html: str
-
+    # read markdown file
+    md_text: str
     with open(vars["filepath"], 'r') as f:
-        text = f.read()
-        converted_html = markdown.markdown(text)
+        md_text = f.read()
 
-    # insert markdown after the insert_after_string
-    insert_after_string: str = vars["insert_after"]
-    index = page_body.find(insert_after_string)
-    if index == -1: raise LookupError("Insert after string was not found in the body of the Confluence page")
-    page_body = page_body[:index + len(insert_after_string)] + converted_html + page_body[index + len(insert_after_string):]
+    # convert markdown file to html
+    converted_html = markdown.markdown(md_text, extensions=['tables', ConfluenceExtension()])
+
+    # insert markdown between insert_start_text and insert_end_text
+    start_substring: str = vars["insert_start_text"]
+    end_substring: str = vars["insert_end_text"]
+    start_index = page_body.find(start_substring)
+    end_index = page_body.find(end_substring)
+    if start_index == -1 or end_index == -1 or start_index > end_index: raise LookupError("Insert after string was not found in the body of the Confluence page")
+    page_body = page_body[:start_index + len(start_substring)] + converted_html + page_body[end_index:end_index + len(end_substring)] + page_body[end_index + len(end_substring):]
 
     # create edit page command
     input = EditPageCommandInput(domain, page_id, page_status, page_title, page_body, page_version_number)
     command = EditPageCommand(input)
 
     response = client.send(command)
+    print("Success!") #DEBUG
 
 if __name__ == "__main__":
     main()

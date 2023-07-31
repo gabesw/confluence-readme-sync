@@ -14,8 +14,11 @@ inputs:
   token:
     description: 'Confluence token for the user'
     required: true
-  insert_after:
-    description: 'The markdown will be inserted after this HTML snippet found in the confluence page'
+  insert_start_text:
+    description: 'HTML or text marking the start of the block to insert the markdown into'
+    required: true
+  insert_end_text:
+    description: 'HTML or text marking the end of the block to insert the markdown into'
     required: true
 runs:
   using: 'docker'
