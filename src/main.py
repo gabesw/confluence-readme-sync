@@ -7,6 +7,7 @@ from api import ConfluenceClient, GetPageCommand, GetPageCommandInput, EditPageC
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import markdown
+from confluence_markdown_extension import ConfluenceExtension
 
 load_dotenv()
 
@@ -45,7 +46,7 @@ def main():
         md_text = f.read()
 
     # convert markdown file to html
-    converted_html = markdown.markdown(md_text)
+    converted_html = markdown.markdown(md_text, extensions=['tables', ConfluenceExtension()])
 
     # insert markdown between insert_start_text and insert_end_text
     start_substring: str = vars["insert_start_text"]
@@ -60,6 +61,7 @@ def main():
     command = EditPageCommand(input)
 
     response = client.send(command)
+    print("Success!") #DEBUG
 
 if __name__ == "__main__":
     main()
