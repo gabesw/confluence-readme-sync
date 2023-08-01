@@ -1,6 +1,5 @@
 import json
 from os import environ
-import re
 from typing import Dict
 from utils import extract_domain_and_page_id
 from api import ConfluenceClient, GetPageCommand, GetPageCommandInput, EditPageCommand, EditPageCommandInput
@@ -61,7 +60,9 @@ def main():
     command = EditPageCommand(input)
 
     response = client.send(command)
-    print("Success!") #DEBUG
+    if response.status_code == 200:
+        exit(0)
+    exit(1)
 
 if __name__ == "__main__":
     main()
