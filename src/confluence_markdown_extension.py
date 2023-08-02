@@ -53,6 +53,7 @@ class CodeBlockPostprocessor(Postprocessor):
         Replaces HTML code blocks with Confluence code snippet macros with language support.
         """
         # replace code blocks with confluence code blocks using the code snippets macro format
+        #TODO: add if statement to check for the language tag and if it doesnt exist set language to none
         processed_text = re.sub(
             r'<p><code>\$\$\$\$\$(\w+)\$\$\$\$\$\n?(.*?)</code></p>', 
             r'<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">\1</ac:parameter><ac:plain-text-body><![CDATA[\2]]></ac:plain-text-body></ac:structured-macro>', 
@@ -66,10 +67,16 @@ class ConfluenceExtension(Extension):
     The extension to be included in the `extensions` argument of the :ref:`Markdown.markdown` function.
     """
     def extendMarkdown(self, md: Markdown):
+        """
+        Adds the processors to the extension.
+        """
         md.registerExtension(self)
         md.preprocessors.register(SectionLinkPreprocessor(md), 'confluence_section_links', 0)
-        md.preprocessors.register(CodeLanguagePreprocessor(md), 'confluence_section_links', 0)
+        md.preprocessors.register(CodeLanguagePreprocessor(md), 'confluence_code_language', 0)
         md.postprocessors.register(CodeBlockPostprocessor(md), 'confluence_code_block', 0)
 
 def makeExtension(*args, **kwargs):
+    """
+    Initializes the Confluence extension.
+    """
     return ConfluenceExtension(*args, **kwargs)

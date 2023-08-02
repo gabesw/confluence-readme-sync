@@ -82,7 +82,6 @@ class ApiCommand(ABC):
         :param auth: The HTTPBasicAuth to use for authentication.
         :return: The response from the API.
         """
-        pass
 
 
 class GetPageCommand(ApiCommand):

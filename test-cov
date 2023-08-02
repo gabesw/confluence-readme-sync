@@ -1,0 +1,3 @@
+#! /bin/bash
+python -m coverage run -m unittest
+coverage report -m --omit='*test*' --skip-empty 
