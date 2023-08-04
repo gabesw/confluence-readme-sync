@@ -1,5 +1,8 @@
 name: 'confluence-readme-sync'
 description: 'Copies the contents of a markdown file to a Confluence page'
+branding:
+  icon: upload-cloud
+  color: blue
 inputs:
   filepath:
     description: 'File path of the markdown file to sync, relative to the root of the repository - README.md by default'
