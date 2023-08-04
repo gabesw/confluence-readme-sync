@@ -15,8 +15,9 @@ jobs:
       uses: actions/setup-python@f97b83114c6f41cfaa57698147ad3ce20543a127
       with:
         python-version: '3.11.4'
-        cache: 'pipenv'
-    - run: pipenv sync
+    - run: |
+        pip install pipenv
+        pipenv sync
     - name: Generate Report
       run: |
         pip install coverage
