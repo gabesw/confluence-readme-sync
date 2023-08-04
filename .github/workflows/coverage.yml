@@ -17,9 +17,8 @@ jobs:
         python-version: '3.11.4'
     - name: Generate Report
       run: |
-        pip install coverage
+        pip install pipenv
+        pipenv sync
         coverage run -m unittest
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@e1dd05cde2ed37d100f658b34ea423728ba1812e
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
