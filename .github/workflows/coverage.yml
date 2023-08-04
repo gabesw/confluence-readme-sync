@@ -20,7 +20,7 @@ jobs:
         pipenv sync
     - name: Generate Report
       run: |
-        pip install coverage
-        coverage run -m unittest
+        pipenv install coverage
+        pipenv run coverage run -m unittest
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@e1dd05cde2ed37d100f658b34ea423728ba1812e
