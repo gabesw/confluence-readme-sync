@@ -22,5 +22,6 @@ jobs:
       run: |
         pipenv install coverage
         pipenv run coverage run -m unittest
+        pipenv run coverage xml
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@e1dd05cde2ed37d100f658b34ea423728ba1812e
