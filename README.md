@@ -12,7 +12,39 @@ This is a Github Action that uploads the README file (or any markdown file) in y
 This is a Docker Github Action written in [Python](https://www.python.org) by [@Gabesw](https://www.github.com/gabesw) that inserts the contents of a markdown file to a certain part of a Confluence page.
 
 ## Setup
-***Setup Details Here***
+### Getting Started
+Create the ``.github/workflows/`` directories in the root of your repository, if they do not exist, and create a file called `confluence-readme-sync.yml` with the following contents (filling the example parameters with the values listed [here](##action-parameters)):
+```yaml
+# .github/workflows/confluence-readme-sync.yml
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: gabesw/confluence-readme-sync@v1
+        with:
+          #filepath: relative/path/to/markdown.md #if commented, will use project's README.md
+          url: https://<domain>/wiki/spaces/aSpace/pages/<page id>/<page name>
+          username: name@example.org
+          token: <Your Confluence API Token>
+          insert_start_text: <p>start</p>
+          insert_end_text: <p>end</p>
+```
+### Authorizing the Confluence API
+Log into Confluence and navigate to [Manage Profile -> Security -> API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens). Create an API token and save the value.
+### Using Secrets (Reccomended)
+Create secrets in your GitHub repository using this [guide](https://docs.github.com/en/actions/security-guides/encrypted-secrets) for any values you want to keep secure. You can use secrets in your `confluence-readme-sync.yml` file in the place of any value.
+```yaml
+# .github/workflows/confluence-readme-sync.yml
+# ...
+token: {{ secrets.confluence_token }}
+```
 
 ## Action Parameters
 | Name | Description | Required | Default |
