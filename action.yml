@@ -9,7 +9,7 @@ inputs:
     description: 'Full URL of the Confluence page to sync with, including the https://'
     required: true
   username:
-    description: 'Confluence username of the token user'
+    description: 'Confluence username associated with token'
     required: true
   token:
     description: 'Confluence token for the user'
