@@ -2,18 +2,18 @@
 This is a Github Action that uploads the README file (or any markdown file) in your repository to a Confluence page.
 
 #### Contents
-- [Overview](##overview)
-- [Setup](##setup)
-- [Action Parameters](##action-parameters)
-- [Limitations](##limitations)
-- [Future Improvements](##future-improvements)
+- [Overview](#overview)
+- [Setup](#setup)
+- [Action Parameters](#action-parameters)
+- [Limitations](#limitations)
+- [Future Improvements](#future-improvements)
 
 ## Overview
 This is a Docker Github Action written in [Python](https://www.python.org) by [@Gabesw](https://www.github.com/gabesw) that inserts the contents of a markdown file to a certain part of a Confluence page.
 
 ## Setup
 ### Getting Started
-Create the ``.github/workflows/`` directories in the root of your repository, if they do not exist, and create a file called `confluence-readme-sync.yml` with the following contents (filling the example parameters with the values listed [here](##action-parameters)):
+Create the `.github/workflows/` directory structure in the root of your repository, if it does not exist, and create a file called `confluence-readme-sync.yml` with the following contents (filling the example parameters with the values listed [here](##action-parameters)):
 ```yaml
 # .github/workflows/confluence-readme-sync.yml
 on:
@@ -60,6 +60,7 @@ token: {{ secrets.confluence_token }}
 - Code blocks with triple backticks must have a language
 - Nested elements in lists will be flattened to the top level when the markdown is converted
 - HTML inside of code blocks is encoded when it shouldn't be
+- Section links need to be capitalized in confluence but need to be lowecase in markdown
 
 ## Future Improvements
 - Add support for local images by uploading them to an image hosting side or document hosting site such as Google Drive or an AWS S3 bucket or by directly uploading them to Confluence
