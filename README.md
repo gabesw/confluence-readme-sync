@@ -65,3 +65,4 @@ token: {{ secrets.confluence_token }}
 ## Future Improvements
 - Add support for local images by uploading them to an image hosting side or document hosting site such as Google Drive or an AWS S3 bucket or by directly uploading them to Confluence
 - Allow code blocks with no language by mapping the language to None if not present
+- Add postprocessor to decode the encoded HTML from code blocks with regex
