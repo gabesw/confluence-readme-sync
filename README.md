@@ -59,7 +59,9 @@ token: {{ secrets.confluence_token }}
 - Images only work with external URL paths and not local files
 - Code blocks with triple backticks must have a language
 - Nested elements in lists will be flattened to the top level when the markdown is converted
+- HTML inside of code blocks is encoded when it shouldn't be
 
 ## Future Improvements
 - Add support for local images by uploading them to an image hosting side or document hosting site such as Google Drive or an AWS S3 bucket or by directly uploading them to Confluence
 - Allow code blocks with no language by mapping the language to None if not present
+- Add postprocessor to decode the encoded HTML from code blocks with regex

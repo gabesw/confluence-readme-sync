@@ -54,7 +54,7 @@ def main() -> None:
 
     # convert markdown file to html
     logging.info("Converting markdown file.")
-    converted_html = markdown.markdown(md_text, extensions=['tables', ConfluenceExtension()])
+    converted_html = markdown.markdown(md_text, extensions=['tables', 'fenced_code', ConfluenceExtension()])
 
     # insert markdown between insert_start_text and insert_end_text
     start_substring: str = vars["insert_start_text"]
